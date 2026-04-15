@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ks.com.budgetmanagementproject.feature.role.entity.Role;
 import ks.com.budgetmanagementproject.feature.role.repository.RoleRepository;
-import ks.com.budgetmanagementproject.feature.token.entity.RefreshToken;
 import ks.com.budgetmanagementproject.feature.token.service.RedisBlackTokenService;
 import ks.com.budgetmanagementproject.feature.token.service.RedisRefreshTokenService;
 import ks.com.budgetmanagementproject.feature.user.dto.*;
@@ -83,15 +82,7 @@ public class UserService {
         String accessToken = jwtUtil.createAccessToken(user.getId(), user.getUsername(), roles, JWTUtil.ACCESS_TOKEN_EXPIRE_COUNT);
         String refreshToken = jwtUtil.createRefreshToken(user.getId(), user.getUsername(), roles, JWTUtil.REFRESH_TOKEN_EXPIRE_COUNT);
 
-        RefreshToken rt = RefreshToken.builder()
-                .username(user.getUsername())
-                .refresh(refreshToken)
-                .expiresAt(System.currentTimeMillis() + JWTUtil.REFRESH_TOKEN_EXPIRE_COUNT)
-                .build();
-
         redisRefreshTokenService.addRefreshToken(refreshToken, JWTUtil.REFRESH_TOKEN_EXPIRE_COUNT);
-
-        // refreshRepository.save(rt);
 
         Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
         accessTokenCookie.setHttpOnly(true);
