@@ -3,15 +3,20 @@ export DOCKER_API_VERSION=1.44
 
 # JAR 빌드
 service-build:
-	./gradlew build
+	./gradlew build -x test
 
 # 앱 실행
 service-boot-run:
 	./gradlew bootRun
 
+# 앱 종료
+service-boot-stop:
+	@echo "Stopping application on port 9091..."
+	@lsof -t -i:9091 | xargs -r kill -9
+
 # 도커 빌드 및 실행
 service-run:
-	docker-compose up --build -d
+	docker-compose up
 
 # 도커 컨테이너 재시작
 service-restart:
