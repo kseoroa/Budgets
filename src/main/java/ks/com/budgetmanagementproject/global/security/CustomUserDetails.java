@@ -22,18 +22,10 @@ public class CustomUserDetails implements UserDetails {
     private final String password;
     private final List<GrantedAuthority> authorities;
 
-    public CustomUserDetails() {
-        this.userId = null;
-        this.username = null;
-        this.password = null;
-        this.authorities = List.of();
-    }
-
     public CustomUserDetails(User user) {
         this.userId = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
-
         this.authorities = Optional.ofNullable(user.getRoles()).orElseGet(Set::of)
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(toAuthority(role.getName())))

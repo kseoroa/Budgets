@@ -138,6 +138,7 @@ JWT_SECRET=${JWT_SECRET}
 # 서비스 빌드 및 실행
 make service-build
 make service-run
+make service-boot-run
 
 # .env 파일 수정 (필요시)
 vim .env
