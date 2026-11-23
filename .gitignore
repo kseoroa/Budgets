@@ -39,6 +39,9 @@ out/
 ### env file ###
 .env
 
+### test file ###
+test.js
+
 ### sql ###
 /src/main/resources/data.sql
 /src/main/resources/db/migration/**
